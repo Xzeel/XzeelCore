@@ -6,7 +6,7 @@
 
   <groupId>org.xzeelketche</groupId>
   <artifactId>XzeelCore</artifactId>
-  <version>1.0-Beta</version>
+  <version>1.1.0-BETA</version>
   <packaging>jar</packaging>
 
   <name>XzeelCore</name>
