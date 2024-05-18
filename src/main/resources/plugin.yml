@@ -1,0 +1,7 @@
+name: XzeelCore
+version: '${project.version}'
+main: org.xzeelketche.xzeelcore.main
+api-version: '1.20'
+authors: [XzeelKetche]
+description: Plugin ini adalah plugin Core yang dibuat untuk mensupportkan plugin-plugin yang dikembangkan oleh author plugin ini.
+website: https://xzeelketche.carrd.co/
