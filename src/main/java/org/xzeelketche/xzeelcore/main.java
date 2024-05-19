@@ -6,11 +6,19 @@ public final class main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getLogger().info("Plugin XzeelCore berhasil dinyalakan!");
+        getLogger().info("+---------------------------------+");
+        getLogger().info("");
+        getLogger().info("XzeelCore plugin started successfully!");
+        getLogger().info("");
+        getLogger().info("+---------------------------------+");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("Plugin XzeelCore berhasil dimatikan!");
+        getLogger().info("+---------------------------------+");
+        getLogger().info("");
+        getLogger().info("XzeelCore plugin shut down successfully!");
+        getLogger().info("");
+        getLogger().info("+---------------------------------+");
     }
 }
