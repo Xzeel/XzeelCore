@@ -1,0 +1,17 @@
+name: XzeelCore
+version: '1.2025.0'
+main: org.xzeelketche.xzeelcore.XzeelCore
+api-version: '1.21'
+load: STARTUP
+authors: [ XzeelKetche, Envy Studio ]
+description: An original XzeelCore plugin.
+website: https://xzeelketche.carrd.co/
+commands:
+  help:
+    description: Show the help menu.
+    usage: /help
+    permission: xzeelcore.help
+permissions:
+  xzeelcore.help:
+    description: Allows use of the help command.
+    default: true
