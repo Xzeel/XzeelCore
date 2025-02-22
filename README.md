@@ -9,6 +9,7 @@
 
 <p align="center"> 
   <a href="https://discord.gg/SnnbztmqyR" target="_blank"> <img src="https://discordapp.com/api/guilds/1229380865167986718/widget.png?style=banner2"/> </a>
+  <a href="https://discord.gg/UF8dSpCkFa" target="_blank"> <img src="https://discordapp.com/api/guilds/1165612809258807316/widget.png?style=banner2"/> </a>
 </p>
 
 ## 👥 Contributors
