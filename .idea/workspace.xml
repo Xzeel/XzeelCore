@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62192511-90a7-48e8-a555-3b54e4441458" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="62192511-90a7-48e8-a555-3b54e4441458" name="Changes" comment="1.2025.1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +37,9 @@
     &quot;accountId&quot;: &quot;b5cedd4a-831b-419d-afbb-6034489b3953&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -97,6 +98,19 @@
       <option name="presentableId" value="Default" />
       <updated>1740202770182</updated>
     </task>
+    <task id="LOCAL-00001" summary="1.2025.1">
+      <option name="closed" value="true" />
+      <created>1740269608241</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740269608241</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1.2025.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.2025.1" />
   </component>
 </project>

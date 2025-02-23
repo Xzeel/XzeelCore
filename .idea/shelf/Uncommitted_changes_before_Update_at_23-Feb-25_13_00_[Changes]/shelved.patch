@@ -1,0 +1,185 @@
+Index: src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.xzeelketche.xzeelcore;\r\n\r\nimport org.bukkit.Bukkit;\r\nimport org.bukkit.ChatColor;\r\nimport org.bukkit.entity.Player;\r\nimport org.bukkit.event.EventHandler;\r\nimport org.bukkit.event.Listener;\r\nimport org.bukkit.event.player.PlayerJoinEvent;\r\nimport org.bukkit.plugin.java.JavaPlugin;\r\nimport org.bukkit.scheduler.BukkitScheduler;\r\n\r\nimport java.io.BufferedReader;\r\nimport java.io.InputStreamReader;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.URL;\r\n\r\npublic class UpdateChecker implements Listener {\r\n\r\n    private final JavaPlugin plugin;\r\n    private final String localVersion;\r\n    private String remoteVersion;\r\n    private boolean updateAvailable = false;\r\n    private static final String VERSION_URL = \"https://github.com/Xzeel/XzeelCore/releases\";\r\n    private static final long CHECK_INTERVAL = 72000; // Dalam ticks (1 jam)\r\n\r\n    public UpdateChecker(JavaPlugin plugin) {\r\n        this.plugin = plugin;\r\n        this.localVersion = plugin.getDescription().getVersion();\r\n        startUpdateTask();\r\n    }\r\n\r\n    private void startUpdateTask() {\r\n        BukkitScheduler scheduler = Bukkit.getScheduler();\r\n        scheduler.runTaskTimerAsynchronously(plugin, () -> {\r\n            try {\r\n                checkForUpdates();\r\n                if(updateAvailable) {\r\n                    plugin.getLogger().info(\"Update tersedia! Versi terbaru: \" + remoteVersion);\r\n                }\r\n            } catch (Exception e) {\r\n                plugin.getLogger().warning(\"Gagal memeriksa update: \" + e.getMessage());\r\n            }\r\n        }, 0L, CHECK_INTERVAL);\r\n    }\r\n\r\n    private void checkForUpdates() throws Exception {\r\n        URL url = new URL(VERSION_URL);\r\n        HttpURLConnection connection = (HttpURLConnection) url.openConnection();\r\n        connection.setRequestMethod(\"GET\");\r\n\r\n        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));\r\n        remoteVersion = reader.readLine().trim();\r\n        reader.close();\r\n\r\n        updateAvailable = isNewerVersion(localVersion, remoteVersion);\r\n    }\r\n\r\n    private boolean isNewerVersion(String local, String remote) {\r\n        String[] localParts = local.split(\"\\\\.\");\r\n        String[] remoteParts = remote.split(\"\\\\.\");\r\n\r\n        for(int i = 0; i < Math.min(localParts.length, remoteParts.length); i++) {\r\n            int localNum = Integer.parseInt(localParts[i]);\r\n            int remoteNum = Integer.parseInt(remoteParts[i]);\r\n\r\n            if(remoteNum > localNum) return true;\r\n            if(remoteNum < localNum) return false;\r\n        }\r\n        return remoteParts.length > localParts.length;\r\n    }\r\n\r\n    @EventHandler\r\n    public void onPlayerJoin(PlayerJoinEvent event) {\r\n        Player player = event.getPlayer();\r\n        if(player.hasPermission(\"xzeelcore.update\") && updateAvailable) {\r\n            Bukkit.getScheduler().runTaskLater(plugin, () -> {\r\n                player.sendMessage(ChatColor.YELLOW + \"[XzeelCore] Versi terbaru \" + remoteVersion + \" tersedia!\");\r\n                player.sendMessage(ChatColor.YELLOW + \"Download di: https://github.com/Xzeel/XzeelCore/releases\");\r\n            }, 100L); // Delay 5 detik\r\n        }\r\n    }\r\n\r\n    // Command untuk manual check\r\n    public void registerUpdateCommand() {\r\n        plugin.getCommand(\"xzeelcoreupdate\").setExecutor((sender, command, label, args) -> {\r\n            if(sender.hasPermission(\"xzeelcore.update\")) {\r\n                sender.sendMessage(ChatColor.YELLOW + \"Memeriksa update...\");\r\n                Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {\r\n                    try {\r\n                        checkForUpdates();\r\n                        Bukkit.getScheduler().runTask(plugin, () -> {\r\n                            if(updateAvailable) {\r\n                                sender.sendMessage(ChatColor.YELLOW + \"[XzeelCore] Versi terbaru \" + remoteVersion + \" tersedia!\");\r\n                            } else {\r\n                                sender.sendMessage(ChatColor.GREEN + \"Plugin sudah menggunakan versi terbaru!\");\r\n                            }\r\n                        });\r\n                    } catch (Exception e) {\r\n                        sender.sendMessage(ChatColor.RED + \"Gagal memeriksa update: \" + e.getMessage());\r\n                    }\r\n                });\r\n            }\r\n            return true;\r\n        });\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java b/src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java
+--- a/src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java	(revision 086c6258bf6f6846bdd37ad7e297d46ef0e8eb60)
++++ b/src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java	(date 1740290362847)
+@@ -35,10 +35,10 @@
+             try {
+                 checkForUpdates();
+                 if(updateAvailable) {
+-                    plugin.getLogger().info("Update tersedia! Versi terbaru: " + remoteVersion);
++                    plugin.getLogger().info("Update available! Latest version: " + remoteVersion);
+                 }
+             } catch (Exception e) {
+-                plugin.getLogger().warning("Gagal memeriksa update: " + e.getMessage());
++                plugin.getLogger().warning("Failed to check for updates: " + e.getMessage());
+             }
+         }, 0L, CHECK_INTERVAL);
+     }
+@@ -74,8 +74,8 @@
+         Player player = event.getPlayer();
+         if(player.hasPermission("xzeelcore.update") && updateAvailable) {
+             Bukkit.getScheduler().runTaskLater(plugin, () -> {
+-                player.sendMessage(ChatColor.YELLOW + "[XzeelCore] Versi terbaru " + remoteVersion + " tersedia!");
+-                player.sendMessage(ChatColor.YELLOW + "Download di: https://github.com/Xzeel/XzeelCore/releases");
++                player.sendMessage(ChatColor.AQUA + "[XzeelCore] Latest version " + remoteVersion + " available!");
++                player.sendMessage(ChatColor.AQUA + "Download at: https://github.com/Xzeel/XzeelCore/releases");
+             }, 100L); // Delay 5 detik
+         }
+     }
+@@ -84,19 +84,19 @@
+     public void registerUpdateCommand() {
+         plugin.getCommand("xzeelcoreupdate").setExecutor((sender, command, label, args) -> {
+             if(sender.hasPermission("xzeelcore.update")) {
+-                sender.sendMessage(ChatColor.YELLOW + "Memeriksa update...");
++                sender.sendMessage(ChatColor.AQUA + "Checking for updates...");
+                 Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                     try {
+                         checkForUpdates();
+                         Bukkit.getScheduler().runTask(plugin, () -> {
+                             if(updateAvailable) {
+-                                sender.sendMessage(ChatColor.YELLOW + "[XzeelCore] Versi terbaru " + remoteVersion + " tersedia!");
++                                sender.sendMessage(ChatColor.AQUA + "[XzeelCore] Latest version " + remoteVersion + " available!");
+                             } else {
+-                                sender.sendMessage(ChatColor.GREEN + "Plugin sudah menggunakan versi terbaru!");
++                                sender.sendMessage(ChatColor.GREEN + "XzeelCore plugin already uses the latest version!");
+                             }
+                         });
+                     } catch (Exception e) {
+-                        sender.sendMessage(ChatColor.RED + "Gagal memeriksa update: " + e.getMessage());
++                        sender.sendMessage(ChatColor.RED + "Failed to check for updates: " + e.getMessage());
+                     }
+                 });
+             }
+Index: src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.xzeelketche.xzeelcore;\r\n\r\nimport org.bukkit.plugin.java.JavaPlugin;\r\nimport net.kyori.adventure.text.Component;\r\nimport net.kyori.adventure.text.format.TextColor;\r\nimport net.kyori.adventure.text.format.TextDecoration;\r\nimport org.xzeelketche.xzeelcore.commands.HelpCommand;\r\n\r\npublic final class XzeelCore extends JavaPlugin {\r\n\r\n    @Override\r\n    public void onLoad() {\r\n        // Load or create config\r\n        saveDefaultConfig();\r\n    }\r\n\r\n    @Override\r\n    public void onEnable() {\r\n        UpdateChecker updateChecker = new UpdateChecker(this);\r\n        updateChecker.registerUpdateCommand();\r\n        getServer().getPluginManager().registerEvents(updateChecker, this);\r\n\r\n        // Watermark (onEnable)\r\n        Component watermarkMessage = Component.text()\r\n                .append(Component.text(\"\\n\" +\r\n                        \" ㅤㅤ__  __ __________ _____ _     ____ ___  ____  _____ \\n\" +\r\n                        \" ㅤㅤ\\\\ \\\\/ /|__  / ____| ____| |   / ___/ _ \\\\|  _ \\\\| ____|\\n\" +\r\n                        \"  ㅤㅤ\\\\  /   / /|  _| |  _| | |  | |  | | | | |_) |  _|  \\n\" +\r\n                        \"  ㅤㅤ/  \\\\  / /_| |___| |___| |__| |__| |_| |  _ <| |___ \\n\" +\r\n                        \" ㅤㅤ/_/\\\\_\\\\/____|_____|_____|_____\\\\____\\\\___/|_| \\\\_\\\\_____|\\n\" +\r\n                        \"\\n\", TextColor.fromHexString(\"#31a9fc\")))\r\n                .build();\r\n\r\n        // Pesan onEnable dengan gaya modern\r\n        Component enableMessage = Component.text()\r\n                .append(Component.text(\"[\" + getName() + \"] \", TextColor.fromHexString(\"#31a9fc\")).decorate(TextDecoration.BOLD))\r\n                .append(Component.text(\"Plugin XzeelCore has been \", TextColor.fromHexString(\"#FFFFFF\")))\r\n                .append(Component.text(\"enabled\", TextColor.fromHexString(\"#31a9fc\")).decorate(TextDecoration.BOLD))\r\n                .append(Component.text(\"! :)\", TextColor.fromHexString(\"#FFD700\")))\r\n                .append(Component.text(\"\\n\", TextColor.fromHexString(\"#FFFFFF\")))\r\n                .append(Component.text(\"ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤVersion: \", TextColor.fromHexString(\"#FFFFFF\")))\r\n                .append(Component.text(getDescription().getVersion(), TextColor.fromHexString(\"#31a9fc\")))\r\n                .append(Component.text(\"\\n\", TextColor.fromHexString(\"#FFFFFF\")))\r\n                .build();\r\n\r\n        // Kirim pesan ke console\r\n        getServer().getConsoleSender().sendMessage(watermarkMessage);\r\n        getServer().getConsoleSender().sendMessage(enableMessage);\r\n\r\n        // Register commands\r\n        this.getCommand(\"help\").setExecutor(new HelpCommand());\r\n\r\n        saveResource(\"config.yml\", true);\r\n    }\r\n\r\n    @Override\r\n    public void onDisable() {\r\n        // Watermark (onDisable)\r\n        Component watermarkMessage = Component.text()\r\n                .append(Component.text(\"\\n\" +\r\n                        \" ㅤㅤ__  __ __________ _____ _     ____ ___  ____  _____ \\n\" +\r\n                        \" ㅤㅤ\\\\ \\\\/ /|__  / ____| ____| |   / ___/ _ \\\\|  _ \\\\| ____|\\n\" +\r\n                        \"  ㅤㅤ\\\\  /   / /|  _| |  _| | |  | |  | | | | |_) |  _|  \\n\" +\r\n                        \"  ㅤㅤ/  \\\\  / /_| |___| |___| |__| |__| |_| |  _ <| |___ \\n\" +\r\n                        \" ㅤㅤ/_/\\\\_\\\\/____|_____|_____|_____\\\\____\\\\___/|_| \\\\_\\\\_____|\\n\" +\r\n                        \"\\n\", TextColor.fromHexString(\"#31a9fc\")))\r\n                .build();\r\n\r\n        // Create a formatted component to notify console that the plugin is now disabled\r\n        Component disableMessage = Component.text()\r\n                .append(Component.text(\"[\" + getName() + \"] \", TextColor.fromHexString(\"#FF6347\")).decorate(TextDecoration.BOLD))\r\n                .append(Component.text(\"Plugin XzeelCore has been \", TextColor.fromHexString(\"#FFFFFF\")))\r\n                .append(Component.text(\"disabled\", TextColor.fromHexString(\"#FF6347\")).decorate(TextDecoration.BOLD))\r\n                .append(Component.text(\"! :(\", TextColor.fromHexString(\"#FF0000\")))\r\n                .append(Component.text(\"\\n\", TextColor.fromHexString(\"#FFFFFF\")))\r\n                .append(Component.text(\"ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤVersion: \", TextColor.fromHexString(\"#FFFFFF\")))\r\n                .append(Component.text(getDescription().getVersion(), TextColor.fromHexString(\"#FF6347\")))\r\n                .append(Component.text(\"\\n\", TextColor.fromHexString(\"#FFFFFF\")))\r\n                .build();\r\n\r\n        // Send the message to the console\r\n        getServer().getConsoleSender().sendMessage(watermarkMessage);\r\n        getServer().getConsoleSender().sendMessage(disableMessage);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java b/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java
+--- a/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java	(revision 086c6258bf6f6846bdd37ad7e297d46ef0e8eb60)
++++ b/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java	(date 1740289237790)
+@@ -36,7 +36,7 @@
+                 .append(Component.text("[" + getName() + "] ", TextColor.fromHexString("#31a9fc")).decorate(TextDecoration.BOLD))
+                 .append(Component.text("Plugin XzeelCore has been ", TextColor.fromHexString("#FFFFFF")))
+                 .append(Component.text("enabled", TextColor.fromHexString("#31a9fc")).decorate(TextDecoration.BOLD))
+-                .append(Component.text("! :)", TextColor.fromHexString("#FFD700")))
++                .append(Component.text("! :)", TextColor.fromHexString("#FFFFFF")))
+                 .append(Component.text("\n", TextColor.fromHexString("#FFFFFF")))
+                 .append(Component.text("ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤVersion: ", TextColor.fromHexString("#FFFFFF")))
+                 .append(Component.text(getDescription().getVersion(), TextColor.fromHexString("#31a9fc")))
+@@ -50,7 +50,7 @@
+         // Register commands
+         this.getCommand("help").setExecutor(new HelpCommand());
+ 
+-        saveResource("config.yml", true);
++        saveConfig();
+     }
+ 
+     @Override
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"62192511-90a7-48e8-a555-3b54e4441458\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/vcs.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/vcs.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/pom.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/resources/config.yml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/resources/config.yml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/resources/plugin.yml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/resources/plugin.yml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Xzeel&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Xzeel/XzeelCore.git&quot;,\r\n    &quot;accountId&quot;: &quot;b5cedd4a-831b-419d-afbb-6034489b3953&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 2\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2tNqEEiYLbhyaC43EnnbXRr6Kmf\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Maven.XzeelCore.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"XzeelCore\" type=\"MavenRunConfiguration\" factoryName=\"Maven\" nameIsGenerated=\"true\">\r\n      <MavenSettings>\r\n        <option name=\"myGeneralSettings\" />\r\n        <option name=\"myRunnerSettings\" />\r\n        <option name=\"myRunnerParameters\">\r\n          <MavenRunnerParameters>\r\n            <option name=\"cmdOptions\" />\r\n            <option name=\"profiles\">\r\n              <set />\r\n            </option>\r\n            <option name=\"goals\">\r\n              <list />\r\n            </option>\r\n            <option name=\"multimoduleDir\" />\r\n            <option name=\"pomFileName\" />\r\n            <option name=\"profilesMap\">\r\n              <map />\r\n            </option>\r\n            <option name=\"projectsCmdOptionValues\">\r\n              <list />\r\n            </option>\r\n            <option name=\"resolveToWorkspace\" value=\"false\" />\r\n            <option name=\"workingDirPath\" value=\"$PROJECT_DIR$\" />\r\n          </MavenRunnerParameters>\r\n        </option>\r\n      </MavenSettings>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"62192511-90a7-48e8-a555-3b54e4441458\" name=\"Changes\" comment=\"\" />\r\n      <created>1740202770182</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1740202770182</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 086c6258bf6f6846bdd37ad7e297d46ef0e8eb60)
++++ b/.idea/workspace.xml	(date 1740290318858)
+@@ -4,13 +4,11 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="62192511-90a7-48e8-a555-3b54e4441458" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
++    <list default="true" id="62192511-90a7-48e8-a555-3b54e4441458" name="Changes" comment="1.2025.1">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -39,6 +37,9 @@
+     &quot;accountId&quot;: &quot;b5cedd4a-831b-419d-afbb-6034489b3953&quot;
+   }
+ }</component>
++  <component name="ProblemsViewState">
++    <option name="selectedTabId" value="CurrentFile" />
++  </component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 2
+ }</component>
+@@ -97,6 +98,19 @@
+       <option name="presentableId" value="Default" />
+       <updated>1740202770182</updated>
+     </task>
++    <task id="LOCAL-00001" summary="1.2025.1">
++      <option name="closed" value="true" />
++      <created>1740269608241</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1740269608241</updated>
++    </task>
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
++  <component name="VcsManagerConfiguration">
++    <MESSAGE value="1.2025.1" />
++    <option name="LAST_COMMIT_MESSAGE" value="1.2025.1" />
++  </component>
+ </project>
+\ No newline at end of file
+Index: src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.xzeelketche.xzeelcore.commands;\r\n\r\nimport net.kyori.adventure.text.Component;\r\nimport net.kyori.adventure.text.format.TextColor;\r\nimport net.kyori.adventure.text.format.TextDecoration;\r\nimport org.bukkit.command.Command;\r\nimport org.bukkit.command.CommandExecutor;\r\nimport org.bukkit.command.CommandSender;\r\nimport org.bukkit.entity.Player;\r\nimport org.jetbrains.annotations.NotNull;\r\n\r\npublic class HelpCommand implements CommandExecutor {\r\n    @Override\r\n    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {\r\n        if (sender instanceof Player) {\r\n            Player player = (Player) sender;\r\n\r\n            // Warna gradient untuk judul\r\n            Component title = Component.text()\r\n                    .append(Component.newline())\r\n                    .append(Component.text(\"XzeelCore Help\", TextColor.fromHexString(\"#31a9fc\")))\r\n                    .append(Component.text(\" ✨\", TextColor.fromHexString(\"#FFD700\")))\r\n                    .decorate(TextDecoration.BOLD)\r\n                    .build();\r\n\r\n            // Pesan bantuan\r\n            Component helpMessage = Component.text()\r\n                    .append(Component.newline())\r\n                    .append(Component.text(\"Commands:\", TextColor.fromHexString(\"#1E90FF\")).decorate(TextDecoration.BOLD))\r\n                    .append(Component.newline())\r\n                    .append(Component.text(\"▶ /help\", TextColor.fromHexString(\"#FFA500\")))\r\n                    .append(Component.text(\" - Show this help menu.\", TextColor.fromHexString(\"#FFFFFF\")))\r\n                    .append(Component.newline())\r\n                    .append(Component.text(\"Support: \", TextColor.fromHexString(\"#1E90FF\")).decorate(TextDecoration.BOLD))\r\n                    .append(Component.text(\"Contact admin for assistance.\", TextColor.fromHexString(\"#FFFFFF\")))\r\n                    .append(Component.newline())\r\n                    .build();\r\n\r\n            // Kirim pesan ke pemain\r\n            player.sendMessage(title);\r\n            player.sendMessage(helpMessage);\r\n        } else {\r\n            sender.sendMessage(\"This command can only be run by a player.\");\r\n        }\r\n        return true;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java b/src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java
+--- a/src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java	(revision 086c6258bf6f6846bdd37ad7e297d46ef0e8eb60)
++++ b/src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java	(date 1740289720198)
+@@ -18,9 +18,9 @@
+             // Warna gradient untuk judul
+             Component title = Component.text()
+                     .append(Component.newline())
++                    .append(Component.text("◆ ", TextColor.fromHexString("#FFD700"))).decorate(TextDecoration.BOLD)
+                     .append(Component.text("XzeelCore Help", TextColor.fromHexString("#31a9fc")))
+-                    .append(Component.text(" ✨", TextColor.fromHexString("#FFD700")))
+-                    .decorate(TextDecoration.BOLD)
++                    .append(Component.text(" ◆", TextColor.fromHexString("#FFD700"))).decorate(TextDecoration.BOLD)
+                     .build();
+ 
+             // Pesan bantuan
+@@ -31,6 +31,9 @@
+                     .append(Component.text("▶ /help", TextColor.fromHexString("#FFA500")))
+                     .append(Component.text(" - Show this help menu.", TextColor.fromHexString("#FFFFFF")))
+                     .append(Component.newline())
++                    .append(Component.text("▶ /xzeelcoreupdate", TextColor.fromHexString("#FFA500")))
++                    .append(Component.text(" - Check for plugin updates.", TextColor.fromHexString("#FFFFFF")))
++                    .append(Component.newline())
+                     .append(Component.text("Support: ", TextColor.fromHexString("#1E90FF")).decorate(TextDecoration.BOLD))
+                     .append(Component.text("Contact admin for assistance.", TextColor.fromHexString("#FFFFFF")))
+                     .append(Component.newline())
+@@ -40,7 +43,7 @@
+             player.sendMessage(title);
+             player.sendMessage(helpMessage);
+         } else {
+-            sender.sendMessage("This command can only be run by a player.");
++            sender.sendMessage("[XzeelCore] This command can only be run by a player.");
+         }
+         return true;
+     }

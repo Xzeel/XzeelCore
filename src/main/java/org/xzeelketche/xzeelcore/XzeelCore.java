@@ -36,7 +36,7 @@ public final class XzeelCore extends JavaPlugin {
                 .append(Component.text("[" + getName() + "] ", TextColor.fromHexString("#31a9fc")).decorate(TextDecoration.BOLD))
                 .append(Component.text("Plugin XzeelCore has been ", TextColor.fromHexString("#FFFFFF")))
                 .append(Component.text("enabled", TextColor.fromHexString("#31a9fc")).decorate(TextDecoration.BOLD))
-                .append(Component.text("! :)", TextColor.fromHexString("#FFD700")))
+                .append(Component.text("! :)", TextColor.fromHexString("#FFFFFF")))
                 .append(Component.text("\n", TextColor.fromHexString("#FFFFFF")))
                 .append(Component.text("ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤVersion: ", TextColor.fromHexString("#FFFFFF")))
                 .append(Component.text(getDescription().getVersion(), TextColor.fromHexString("#31a9fc")))
@@ -50,7 +50,7 @@ public final class XzeelCore extends JavaPlugin {
         // Register commands
         this.getCommand("help").setExecutor(new HelpCommand());
 
-        saveResource("config.yml", true);
+        saveConfig();
     }
 
     @Override

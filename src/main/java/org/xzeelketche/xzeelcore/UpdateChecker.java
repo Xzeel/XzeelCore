@@ -35,10 +35,10 @@ public class UpdateChecker implements Listener {
             try {
                 checkForUpdates();
                 if(updateAvailable) {
-                    plugin.getLogger().info("Update tersedia! Versi terbaru: " + remoteVersion);
+                    plugin.getLogger().info("Update available! Latest version: " + remoteVersion);
                 }
             } catch (Exception e) {
-                plugin.getLogger().warning("Gagal memeriksa update: " + e.getMessage());
+                plugin.getLogger().warning("Failed to check for updates: " + e.getMessage());
             }
         }, 0L, CHECK_INTERVAL);
     }
@@ -74,8 +74,8 @@ public class UpdateChecker implements Listener {
         Player player = event.getPlayer();
         if(player.hasPermission("xzeelcore.update") && updateAvailable) {
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                player.sendMessage(ChatColor.YELLOW + "[XzeelCore] Versi terbaru " + remoteVersion + " tersedia!");
-                player.sendMessage(ChatColor.YELLOW + "Download di: https://github.com/Xzeel/XzeelCore/releases");
+                player.sendMessage(ChatColor.AQUA + "[XzeelCore] Latest version " + remoteVersion + " available!");
+                player.sendMessage(ChatColor.AQUA + "Download at: https://github.com/Xzeel/XzeelCore/releases");
             }, 100L); // Delay 5 detik
         }
     }
@@ -84,19 +84,19 @@ public class UpdateChecker implements Listener {
     public void registerUpdateCommand() {
         plugin.getCommand("xzeelcoreupdate").setExecutor((sender, command, label, args) -> {
             if(sender.hasPermission("xzeelcore.update")) {
-                sender.sendMessage(ChatColor.YELLOW + "Memeriksa update...");
+                sender.sendMessage(ChatColor.AQUA + "Checking for updates...");
                 Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                     try {
                         checkForUpdates();
                         Bukkit.getScheduler().runTask(plugin, () -> {
                             if(updateAvailable) {
-                                sender.sendMessage(ChatColor.YELLOW + "[XzeelCore] Versi terbaru " + remoteVersion + " tersedia!");
+                                sender.sendMessage(ChatColor.AQUA + "[XzeelCore] Latest version " + remoteVersion + " available!");
                             } else {
-                                sender.sendMessage(ChatColor.GREEN + "Plugin sudah menggunakan versi terbaru!");
+                                sender.sendMessage(ChatColor.GREEN + "XzeelCore plugin already uses the latest version!");
                             }
                         });
                     } catch (Exception e) {
-                        sender.sendMessage(ChatColor.RED + "Gagal memeriksa update: " + e.getMessage());
+                        sender.sendMessage(ChatColor.RED + "Failed to check for updates: " + e.getMessage());
                     }
                 });
             }
