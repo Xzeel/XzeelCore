@@ -1,5 +1,24 @@
+############################################################
+# +------------------------------------------------------+ #
+# |                         Notes                        | #
+# +------------------------------------------------------+ #
+############################################################
+
+# This is the config file for XzeelCore.
+# This config was generated for version 1.2025.1.
+
+############################################################
+# +------------------------------------------------------+ #
+# |                  XzeelCore (Global)                  | #
+# +------------------------------------------------------+ #
+############################################################
+
+# IMPORTANT: Never delete or change the "update-checker".
+# If you do, the plugin will crash!
 update-checker:
   enabled: true
   url: "https://github.com/Xzeel/XzeelCore/releases"
-  check-interval: 72000  # 1 hour (in ticks)
+  check-interval: 72000
   permission: "xzeelcore.update"
+
+# End of file <-- No seriously, you're done with configuration.

@@ -18,23 +18,23 @@ public class HelpCommand implements CommandExecutor {
             // Warna gradient untuk judul
             Component title = Component.text()
                     .append(Component.newline())
-                    .append(Component.text("◆ ", TextColor.fromHexString("#FFD700"))).decorate(TextDecoration.BOLD)
+                    .append(Component.text("◆ ", TextColor.fromHexString("#FFFFFF"))).decorate(TextDecoration.BOLD)
                     .append(Component.text("XzeelCore Help", TextColor.fromHexString("#31a9fc")))
-                    .append(Component.text(" ◆", TextColor.fromHexString("#FFD700"))).decorate(TextDecoration.BOLD)
+                    .append(Component.text(" ◆", TextColor.fromHexString("#FFFFFF"))).decorate(TextDecoration.BOLD)
                     .build();
 
             // Pesan bantuan
             Component helpMessage = Component.text()
                     .append(Component.newline())
-                    .append(Component.text("Commands:", TextColor.fromHexString("#1E90FF")).decorate(TextDecoration.BOLD))
+                    .append(Component.text("Commands:", TextColor.fromHexString("#FFFFFF")).decorate(TextDecoration.BOLD))
                     .append(Component.newline())
-                    .append(Component.text("▶ /help", TextColor.fromHexString("#FFA500")))
+                    .append(Component.text("▶ /help", TextColor.fromHexString("#31a9fc")))
                     .append(Component.text(" - Show this help menu.", TextColor.fromHexString("#FFFFFF")))
                     .append(Component.newline())
-                    .append(Component.text("▶ /xzeelcoreupdate", TextColor.fromHexString("#FFA500")))
+                    .append(Component.text("▶ /xzeelcoreupdate", TextColor.fromHexString("#31a9fc")))
                     .append(Component.text(" - Check for plugin updates.", TextColor.fromHexString("#FFFFFF")))
                     .append(Component.newline())
-                    .append(Component.text("Support: ", TextColor.fromHexString("#1E90FF")).decorate(TextDecoration.BOLD))
+                    .append(Component.text("Support: ", TextColor.fromHexString("#FFFFFF")).decorate(TextDecoration.BOLD))
                     .append(Component.text("Contact admin for assistance.", TextColor.fromHexString("#FFFFFF")))
                     .append(Component.newline())
                     .build();
