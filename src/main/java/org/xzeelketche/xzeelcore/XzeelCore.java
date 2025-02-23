@@ -16,6 +16,10 @@ public final class XzeelCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        UpdateChecker updateChecker = new UpdateChecker(this);
+        updateChecker.registerUpdateCommand();
+        getServer().getPluginManager().registerEvents(updateChecker, this);
+
         // Watermark (onEnable)
         Component watermarkMessage = Component.text()
                 .append(Component.text("\n" +
@@ -45,6 +49,8 @@ public final class XzeelCore extends JavaPlugin {
 
         // Register commands
         this.getCommand("help").setExecutor(new HelpCommand());
+
+        saveResource("config.yml", true);
     }
 
     @Override

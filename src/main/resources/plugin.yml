@@ -1,5 +1,5 @@
 name: XzeelCore
-version: '1.2025.0'
+version: '1.2025.1'
 main: org.xzeelketche.xzeelcore.XzeelCore
 api-version: '1.21'
 load: STARTUP
@@ -11,7 +11,15 @@ commands:
     description: Show the help menu.
     usage: /help
     permission: xzeelcore.help
+  xzeelcoreupdate:
+    description: Check for plugin updates.
+    usage: /xzeelcoreupdate
+    permission: xzeelcore.update
+    permission-message: You don't have permission!
 permissions:
   xzeelcore.help:
     description: Allows use of the help command.
     default: true
+  xzeelcore.update:
+    description: Allows use of the xzeelcoreupdate command.
+    default: op
