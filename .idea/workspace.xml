@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62192511-90a7-48e8-a555-3b54e4441458" name="Changes" comment="1.2025.1">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/UpdateChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/XzeelCore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/xzeelketche/xzeelcore/commands/HelpCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +120,23 @@
       <option name="project" value="LOCAL" />
       <updated>1740291637835</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="1.2025.1">
+      <option name="closed" value="true" />
+      <created>1740296441963</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740296441963</updated>
+    </task>
+    <task id="LOCAL-00005" summary="1.2025.1">
+      <option name="closed" value="true" />
+      <created>1740296460389</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1740296460389</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
