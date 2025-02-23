@@ -16,9 +16,7 @@ public final class XzeelCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        UpdateChecker updateChecker = new UpdateChecker(this);
-        updateChecker.registerUpdateCommand();
-        getServer().getPluginManager().registerEvents(updateChecker, this);
+        new UpdateChecker(this, "Xzeel/XzeelCore").checkForUpdates();
 
         // Watermark (onEnable)
         Component watermarkMessage = Component.text()

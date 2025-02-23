@@ -17,8 +17,8 @@
 # If you do, the plugin will crash!
 update-checker:
   enabled: true
-  url: "https://github.com/Xzeel/XzeelCore/releases"
+  url: https://github.com/Xzeel/XzeelCore/releases
   check-interval: 72000
-  permission: "xzeelcore.update"
+  permission: xzeelcore.update
 
 # End of file <-- No seriously, you're done with configuration.
